@@ -28,9 +28,9 @@
   <div fxFlex="40" *ngIf="dish">
     <md-list *ngFor="let cm of dish.comments">
       <md-list-item>
-          {{cm.comment}}<br>
-          {{cm.rating}} Stars<br>
-          -- {{cm.author}} {{cm.date | date}}<br>
+          <p mat-line>{{cm.comment}}</p>
+          <p mat-line>{{cm.rating}} Stars</p>
+          <p mat-line>-- {{cm.author}} {{cm.date | date}}</p>
       </md-list-item>
     </md-list>
   </div>
