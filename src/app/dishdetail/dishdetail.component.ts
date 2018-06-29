@@ -6,11 +6,25 @@ import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
 import 'rxjs/add/operator/switchMap';
 import { Comment } from '../shared/comment';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-dishdetail',
   templateUrl: './dishdetail.component.html',
-  styleUrls: ['./dishdetail.component.scss']
+  styleUrls: ['./dishdetail.component.scss'],
+  animations: [
+    trigger('visibility', [
+        state('shown', style({
+            transform: 'scale(1.0)',
+            opacity: 1
+        })),
+        state('hidden', style({
+            transform: 'scale(0.5)',
+            opacity: 0
+        })),
+        transition('* => *', animate('0.5s ease-in-out'))
+    ])
+  ],
 })
 export class DishdetailComponent implements OnInit {
 
@@ -23,6 +37,7 @@ export class DishdetailComponent implements OnInit {
   @ViewChild(FormGroupDirective) commentFormDirective;
   errMess: string;
   dishcopy = null;
+  visibility = 'shown';
 
   formErrors = {
       'author': '',
@@ -56,10 +71,16 @@ export class DishdetailComponent implements OnInit {
   ngOnInit() {
       this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
 
-      this.route.params
-      .switchMap((params: Params) => { return this.dishservice.getDish(+params['id']); })
-      .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); },
-          errmess => { this.dish = null; this.errMess = <any>errmess; });
+      this.route.params.switchMap((params: Params) => { this.visibility = 'hidden';
+        return this.dishservice.getDish(+params['id']); })
+      .subscribe(dish => { this.dish = dish; this.dishcopy = dish;
+        this.setPrevNext(dish.id); this.visibility = 'shown'; },
+        errmess => this.errMess = <any>errmess);
+
+      // this.route.params
+      // .switchMap((params: Params) => { return this.dishservice.getDish(+params['id']); })
+      // .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); },
+      //     errmess => { this.dish = null; this.errMess = <any>errmess; });
 
       // this.route.params
       //   .switchMap((params: Params) => this.dishservice.getDish(+params['id']))
