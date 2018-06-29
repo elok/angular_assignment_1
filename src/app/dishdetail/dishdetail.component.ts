@@ -22,6 +22,7 @@ export class DishdetailComponent implements OnInit {
   comment = Comment;
   @ViewChild(FormGroupDirective) commentFormDirective;
   errMess: string;
+  dishcopy = null;
 
   formErrors = {
       'author': '',
@@ -56,9 +57,14 @@ export class DishdetailComponent implements OnInit {
       this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
 
       this.route.params
-        .switchMap((params: Params) => this.dishservice.getDish(+params['id']))
-        .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); },
-                errmess => this.errMess = <any>errmess.message);
+      .switchMap((params: Params) => { return this.dishservice.getDish(+params['id']); })
+      .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); },
+          errmess => { this.dish = null; this.errMess = <any>errmess; });
+
+      // this.route.params
+      //   .switchMap((params: Params) => this.dishservice.getDish(+params['id']))
+      //   .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); },
+      //           errmess => this.errMess = <any>errmess.message);
   }
 
   createForm() {
@@ -102,16 +108,12 @@ export class DishdetailComponent implements OnInit {
 
   onSubmit() {
     this.comment = this.commentForm.value;
-    console.log(this.commentForm.value)
+    this.comment['date'] = new Date().toISOString();
+    console.log(this.comment);
 
-    var d = new Date();
-    var n = d.toISOString();
-    this.dish['comments'].push({
-      rating: this.comment['rating'],
-      comment: this.comment['comment'],
-      author: this.comment['author'],
-      date: n,
-    });
+    this.dishcopy.comments.push(this.comment);
+    this.dishcopy.save()
+      .subscribe(dish => { this.dish = dish; console.log(this.dish); });
 
     this.commentForm.reset({
       'author': '',
@@ -119,7 +121,6 @@ export class DishdetailComponent implements OnInit {
       'rating': '5'
     });
     this.commentFormDirective.resetForm();
-
   }
 
 }
