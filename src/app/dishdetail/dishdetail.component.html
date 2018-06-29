@@ -41,6 +41,16 @@
 
     <!-- COMMENT -->
     <form novalidate [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+      <div [hidden]="(commentForm.invalid)">
+        <md-list>
+          <md-list-item>
+            <h1 mat-line > {{comment.comment}} </h1>
+            <h1 mat-line> {{comment.rating}}  Stars</h1>
+            <h1 mat-line> -- {{comment.author}}</h1>
+          </md-list-item>
+        </md-list>
+      </div>
+
       <p>
         <!-- name -->
         <md-input-container class="half-width"
@@ -70,8 +80,12 @@
 
   </div>
 
-  <div [hidden]="dish">
+  <div [hidden]="dish || errMess">
     <md-spinner></md-spinner><h4>Loading . . . Please Wait</h4>
+  </div>
+  <div *ngIf="errMess">
+    <h2>Error</h2>
+    <h4>{{errMess}}</h4>
   </div>
 
 </div>
