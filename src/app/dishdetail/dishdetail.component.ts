@@ -123,4 +123,25 @@ export class DishdetailComponent implements OnInit {
     this.commentFormDirective.resetForm();
   }
 
+  // onSubmit() {
+  //   this.comment = this.commentForm.value;
+  //   console.log(this.commentForm.value)
+  //
+  //   var d = new Date();
+  //   var n = d.toISOString();
+  //   this.dish['comments'].push({
+  //     rating: this.comment['rating'],
+  //     comment: this.comment['comment'],
+  //     author: this.comment['author'],
+  //     date: n,
+  //   });
+  //
+  //   this.commentForm.reset({
+  //     'author': '',
+  //     'comment': '',
+  //     'rating': '5'
+  //   });
+  //   this.commentFormDirective.resetForm();
+  // }
+
 }
