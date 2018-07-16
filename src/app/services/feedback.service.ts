@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Leader } from '../shared/leader';
-import { LEADERS } from '../shared/leaders';
+import { Feedback } from '../shared/feedback';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/delay';
@@ -13,17 +12,17 @@ import { Restangular } from 'ngx-restangular';
 @Injectable({
   providedIn: 'root'
 })
-export class LeaderService {
+export class FeedbackService {
 
   constructor(private restangular: Restangular) { }
 
-  getLeaders(): Observable<Leader[]> {
-    return this.restangular.all('leaders').getList();
+  getFeedback(): Observable<Feedback[]> {
+    return this.restangular.all('feedback').getList();
   }
 
-  getFeaturedLeader(): Observable<Leader> {
-    return this.restangular.all('leaders').getList({featured: true})
-      .pipe(map(leaders => leaders[0]))
+  submitFeedback(feedback): Observable<Feedback> {
+    // this.restangular.post()
+    return this.restangular.all('feedback').post(feedback);
   }
 
 }

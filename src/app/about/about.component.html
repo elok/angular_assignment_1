@@ -59,7 +59,7 @@
 
           <md-list cols="1" rowHeight="50px" *ngIf="leaders">
             <md-list-item *ngFor="let leader of leaders">
-              <img md-list-avatar src={{leader.image}} alt={{leader.name}}>
+              <img md-list-avatar src="http://localhost:3000/{{leader.image}}" alt={{leader.name}}>
               <h1 md-line>{{leader.name}} {{leader.abbr}}</h1>
               <p md-line>
                 <span>{{leader.designation}}</span>

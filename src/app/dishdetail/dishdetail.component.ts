@@ -23,7 +23,37 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
             opacity: 0
         })),
         transition('* => *', animate('0.5s ease-in-out'))
-    ])
+    ]),
+
+    trigger('flyInOut', [
+      state('*', style({ opacity: 1, transform: 'translateX(0)'})),
+      transition(':enter', [
+        style({transform: 'translateX(-100%)', opacity: 0}),
+        animate('500ms ease-in')
+      ]),
+      transition(':leave', [
+        animate('500ms ease-out', style({transform: 'translateX(100%)', opacity: 0}))
+      ])
+    ]),
+
+    trigger('expand', [
+      state('*', style({opacity:1, transform: 'translateX(0)'})),
+      transition(':enter', [
+        style({transform: 'translateY(-50%)', opacity: 0}),
+        animate('200ms ease-in', style({opacity:1, transform: 'translateX(0)'}))
+      ])
+    ]),
+
+    trigger('hide', [
+      state('shown', style({
+        visibility: 'visible'
+      })),
+      state('hidden', style({
+        display: 'none'
+      })),
+      transition('* => *', animate('0.1s ease-in-out'))
+    ]),
+    
   ],
 })
 export class DishdetailComponent implements OnInit {

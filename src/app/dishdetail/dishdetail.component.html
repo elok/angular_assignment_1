@@ -30,12 +30,14 @@
   </div>
 
   <div fxFlex="40" *ngIf="dish" [@visibility]="visibility">
+
+    <md-list>
     <!-- COMMENTS -->
     <md-list *ngFor="let cm of dish.comments">
       <md-list-item>
-          <p mat-line>{{cm.comment}}</p>
-          <p mat-line>{{cm.rating}} Stars</p>
-          <p mat-line>-- {{cm.author}} {{cm.date | date}}</p>
+          <p md-line>{{cm.comment}}</p>
+          <p md-line>{{cm.rating}} Stars</p>
+          <p md-line>-- {{cm.author}} {{cm.date | date}}</p>
       </md-list-item>
     </md-list>
 
@@ -44,9 +46,9 @@
       <div [hidden]="(commentForm.invalid)">
         <md-list>
           <md-list-item>
-            <h1 mat-line > {{comment.comment}} </h1>
-            <h1 mat-line> {{comment.rating}}  Stars</h1>
-            <h1 mat-line> -- {{comment.author}}</h1>
+            <h1 md-line > {{comment.comment}} </h1>
+            <h1 md-line> {{comment.rating}}  Stars</h1>
+            <h1 md-line> -- {{comment.author}}</h1>
           </md-list-item>
         </md-list>
       </div>
@@ -77,6 +79,7 @@
       </p>
       <button type="submit" md-button class="background-primary text-floral-white" [disabled]="commentForm.invalid">Submit</button>
     </form>
+    </md-list>
 
   </div>
 
