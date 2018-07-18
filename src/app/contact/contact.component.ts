@@ -3,55 +3,22 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Feedback, ContactType } from '../shared/feedback';
 
 import { FeedbackService } from '../services/feedback.service';
-import { trigger, state, style, animate, transition } from '@angular/animations';
+import {flyInOut, visibility, hide, expand} from "../animations/app.animation";
 
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss'],
+  host: {
+    '[@flyInOut]': 'true',
+    'style': 'display: block;'
+  },
   animations: [
-    trigger('visibility', [
-        state('shown', style({
-            transform: 'scale(1.0)',
-            opacity: 1
-        })),
-        state('hidden', style({
-            transform: 'scale(0.5)',
-            opacity: 0
-        })),
-        transition('* => *', animate('0.5s ease-in-out'))
-    ]),
-
-    trigger('flyInOut', [
-      state('*', style({ opacity: 1, transform: 'translateX(0)'})),
-      transition(':enter', [
-        style({transform: 'translateX(-100%)', opacity: 0}),
-        animate('500ms ease-in')
-      ]),
-      transition(':leave', [
-        animate('500ms ease-out', style({transform: 'translateX(100%)', opacity: 0}))
-      ])
-    ]),
-
-    trigger('expand', [
-      state('*', style({opacity:1, transform: 'translateX(0)'})),
-      transition(':enter', [
-        style({transform: 'translateY(-50%)', opacity: 0}),
-        animate('200ms ease-in', style({opacity:1, transform: 'translateX(0)'}))
-      ])
-    ]),
-
-    trigger('hide', [
-      state('shown', style({
-        visibility: 'visible'
-      })),
-      state('hidden', style({
-        display: 'none'
-      })),
-      transition('* => *', animate('0.1s ease-in-out'))
-    ]),
-
-  ],
+    flyInOut(),
+    visibility(),
+    hide(),
+    expand()
+  ]
 })
 export class ContactComponent implements OnInit {
 
